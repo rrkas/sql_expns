@@ -1,17 +1,16 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:signup/Screens/Welcome/components/background.dart';
 import 'package:signup/components/rounded_button.dart';
 import 'package:signup/constants.dart';
-import 'dart:core';
-
 import 'package:signup/newScreens/login_screen.dart';
-import 'package:signup/newScreens/registration_screen.dart';
 
 import '../../home_screen.dart';
 
 class Body extends StatelessWidget {
-  // const ({Key? key}) : super(key: key);
+  const Body({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +21,16 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'EXPENSE TRACKER',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w800),
             ),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
+            SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               "assets/icons/chat.svg",
               height: size.height * 0.45,
             ),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
+            SizedBox(height: size.height * 0.03),
             // RoundedButton(
             //   text: "LOGIN",
             //   color: kPrimaryColor,
@@ -61,7 +54,7 @@ class Body extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return HomeScreen();
+                      return const HomeScreen();
                     },
                   ),
                 );
@@ -70,11 +63,14 @@ class Body extends StatelessWidget {
             // Text(),
             // Text("email"),
             ActionChip(
-            label: Text('LogOut', style: TextStyle(color:Colors.white),),
-            backgroundColor: Colors.deepPurple,
-            onPressed: () { Navigator.push(context,MaterialPageRoute(
-                  builder: (context) => NewLoginScreen()));
-            },
+              label: const Text(
+                'LogOut',
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.deepPurple,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const NewLoginScreen()));
+              },
             ),
           ],
         ),

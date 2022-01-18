@@ -1,10 +1,9 @@
 import 'dart:io';
-import 'dart:math';
 
-import 'package:signup/models/details.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:signup/models/details.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static const _databaseName = 'DetailsData.db';
@@ -24,7 +23,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     Directory dataDirectory = await getApplicationDocumentsDirectory();
-    print('db location :' +dataDirectory.path);
+    print('db location :' + dataDirectory.path);
     String dbPath = join(dataDirectory.path, _databaseName);
     return await openDatabase(dbPath, version: _databaseVersion, onCreate: _onCreateDB);
   }

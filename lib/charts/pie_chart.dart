@@ -1,41 +1,33 @@
+import 'package:awesome_circular_chart/awesome_circular_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:signup/models/bnk_transaction.dart';
 import 'package:signup/utilstwo/database_helper.dart';
 import 'package:signup/utilstwo/values.dart';
-import 'package:flutter/material.dart';
-import 'package:awesome_circular_chart/awesome_circular_chart.dart';
 import 'package:sqflite/sqflite.dart';
-
-
 
 class PieChart extends StatefulWidget {
   String name;
-  PieChart(this.name);
+
+  PieChart(this.name, {Key key}) : super(key: key);
+
   @override
-  _PieChartState createState() => _PieChartState(name);
+  _PieChartState createState() => _PieChartState();
 }
 
 class _PieChartState extends State<PieChart> {
-
-  String name;
-
-  _PieChartState(this.name);
-
-
   // List<List<CircularStackEntry>>? _monthyTransactionPieData;
   List<List<CircularStackEntry>> _monthyTransactionPieData;
 
   List<BnkTransaction> transactionList;
 
-  DatabaseHelper _databaseHelper = DatabaseHelper();
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
   bool _loading = true;
 
-  void updateList(){
+  void updateList() {
     final Future<Database> dbFuture = _databaseHelper.initializeDatabase();
-    dbFuture.then((database){
-
-      Future<List<BnkTransaction>> bnkTransactionListFuture = _databaseHelper.
-      getBnkTransactionListPerBank(name);
-      bnkTransactionListFuture.then((bnkTransactionList){
+    dbFuture.then((database) {
+      Future<List<BnkTransaction>> bnkTransactionListFuture = _databaseHelper.getBnkTransactionListPerBank(widget.name);
+      bnkTransactionListFuture.then((bnkTransactionList) {
         print(bnkTransactionList);
         setState(() {
           transactionList = bnkTransactionList;
@@ -49,10 +41,10 @@ class _PieChartState extends State<PieChart> {
     });
   }
 
-  void setmonthyTransactionPieData(){
+  void setmonthyTransactionPieData() {
     _monthyTransactionPieData = [];
 
-    transactionList.forEach((item){
+    for (var item in transactionList) {
       Color debitColor = Colors.yellowAccent[100];
       Color creditColor = Colors.blue[200];
       double debit = item.debitedAmt;
@@ -65,18 +57,16 @@ class _PieChartState extends State<PieChart> {
         creditColor = Colors.blueGrey[200];
         credit = 50;
       }
-      _monthyTransactionPieData.add(
-          <CircularStackEntry>[
-            new CircularStackEntry(
-              <CircularSegmentEntry>[
-                new CircularSegmentEntry(debit,debitColor, rankKey: 'Debit Amount'),
-                new CircularSegmentEntry(credit, creditColor, rankKey: 'Credit Amount'),
-              ],
-              rankKey: monthMap[item.month],
-            ),
-          ]
-      );
-    });
+      _monthyTransactionPieData.add(<CircularStackEntry>[
+        CircularStackEntry(
+          <CircularSegmentEntry>[
+            CircularSegmentEntry(debit, debitColor, rankKey: 'Debit Amount'),
+            CircularSegmentEntry(credit, creditColor, rankKey: 'Credit Amount'),
+          ],
+          rankKey: monthMap[item.month],
+        ),
+      ]);
+    }
   }
 
   double creditAmt = 0;
@@ -100,74 +90,58 @@ class _PieChartState extends State<PieChart> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(transactionList == null){
+    if (transactionList == null) {
       transactionList = [];
       updateList();
     }
-    return new Scaffold(
-      appBar: new AppBar(
-        title: Text(name),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.name),
         backgroundColor: Colors.teal[700],
       ),
       body: _screenWidget(),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal[700],
-        child: new Icon(Icons.next_week),
+        child: const Icon(Icons.next_week),
         onPressed: _cycleMonths,
       ),
     );
   }
 
-  Widget _screenWidget(){
+  Widget _screenWidget() {
     if (_loading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
     return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  'Credit : $creditAmt',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      color: Colors.blue[900]
-                  ),
-                ),
-                Text(
-                  'Debit : $debitAmt',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      color: Colors.yellow[900]
-                  ),
-                )
-              ],
-            ),
-            AnimatedCircularChart(
-              key: _chartKey,
-              size: _chartSize,
-              initialChartData: _monthyTransactionPieData[0],
-              chartType: CircularChartType.Pie,
-            ),
-            Text(
-              monthMap[month],
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
-                  color: Colors.teal[900]
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                'Credit : $creditAmt',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0, color: Colors.blue[900]),
               ),
-            )
-          ],
-        )
+              Text(
+                'Debit : $debitAmt',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0, color: Colors.yellow[900]),
+              )
+            ],
+          ),
+          AnimatedCircularChart(
+            key: _chartKey,
+            size: _chartSize,
+            initialChartData: _monthyTransactionPieData[0],
+            chartType: CircularChartType.Pie,
+          ),
+          Text(
+            monthMap[month],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0, color: Colors.teal[900]),
+          )
+        ],
+      ),
     );
   }
 }
-

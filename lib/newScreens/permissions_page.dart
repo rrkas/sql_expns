@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:signup/newScreens/home_page.dart';
 import 'package:super_easy_permissions/super_easy_permissions.dart';
-import 'package:flutter/material.dart';
-//import 'package:easy_permission_validator/easy_permission_validator.dart';
-
 
 class PermissionPage extends StatefulWidget {
+  const PermissionPage({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => PermissionPageState();
 }
@@ -22,7 +22,7 @@ class PermissionPageState extends State<PermissionPage> {
     super.initState();
 
     RaisedButton requestButton = RaisedButton(
-      child: Text("Allow"),
+      child: const Text("Allow"),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       textColor: Colors.white,
       color: Colors.redAccent,
@@ -31,18 +31,13 @@ class PermissionPageState extends State<PermissionPage> {
       },
     );
 
-    Text requestText =
-    Text("Please Allow SMS Permission", style: TextStyle(fontSize: 18));
-
+    Text requestText = const Text("Please Allow SMS Permission", style: TextStyle(fontSize: 18));
 
     Future<bool> permStatus = getPermissionStatus();
     permStatus.then((res) {
       setState(() {
         if (res) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-              ModalRoute.withName("/Home"));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage()), ModalRoute.withName("/Home"));
         } else {
           _grantStatus = GrantStatus.NOT_GRANTED;
           permButton = requestButton;
@@ -59,18 +54,15 @@ class PermissionPageState extends State<PermissionPage> {
 
     RaisedButton nextButton = RaisedButton(
       onPressed: () {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-            ModalRoute.withName("/Home"));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage()), ModalRoute.withName("/Home"));
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      child: Text("Next"),
+      child: const Text("Next"),
       textColor: Colors.white,
       color: Colors.blue,
     );
 
-    Text nextScreenText = Text(
+    Text nextScreenText = const Text(
       "Awesome! Now continue",
       style: TextStyle(fontSize: 18),
     );
@@ -81,54 +73,46 @@ class PermissionPageState extends State<PermissionPage> {
         color: Colors.white,
         elevation: 0,
       );
-      permStatusText = Text("");
+      permStatusText = const Text("");
     } else if (_grantStatus == GrantStatus.GRANTED) {
       permButton = nextButton;
       permStatusText = nextScreenText;
       statusColor = Colors.blue;
     }
 
-    AssetImage image = AssetImage('assets/images/img.png');
+    AssetImage image = const AssetImage('assets/images/img.png');
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Align(
-          alignment: Alignment.center,
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    decoration:
-                    BoxDecoration(image: DecorationImage(image: image)),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      permStatusText,
-                      Padding(
-                        padding: EdgeInsets.only(top: 24),
-                        child: permButton,
-                      )
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          color: statusColor,
-                          width: 2,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.all(Radius.circular(16))),
-                )
-              ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Container(
+                decoration: BoxDecoration(image: DecorationImage(image: image)),
+              ),
             ),
-          ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  permStatusText,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: permButton,
+                  )
+                ],
+              ),
+              decoration: BoxDecoration(
+                border: Border.all(color: statusColor, width: 2, style: BorderStyle.solid),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
+              ),
+            )
+          ],
         ),
       ),
     );

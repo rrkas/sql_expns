@@ -5,9 +5,7 @@ class BnkTransaction {
   double _debitedAmt;
   double _creditedAmt;
 
-  BnkTransaction(this._bank, this._month, this._year, this._debitedAmt,
-      this._creditedAmt);
-
+  BnkTransaction(this._bank, this._month, this._year, this._debitedAmt, this._creditedAmt);
 
   //getters
   String get bank => _bank;
@@ -43,7 +41,7 @@ class BnkTransaction {
 
   //Convert a BnkTransaction object into a Map object
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = Map();
+    Map<String, dynamic> map = {};
     map['bank'] = _bank;
     map['month'] = _month;
     map['year'] = _year;
@@ -53,11 +51,11 @@ class BnkTransaction {
   }
 
   //Extract a BnkTransaction object from a Map object
-  BnkTransaction.fromMapObject(Map<String, dynamic> map){
-    this._bank = map['bank'];
-    this._month = map['month'];
-    this._year = map['year'];
-    this._debitedAmt = map['debited_amt'];
-    this._creditedAmt = map['credited_amt'];
+  BnkTransaction.fromMapObject(Map<String, dynamic> map) {
+    _bank = map['bank'];
+    _month = map['month'];
+    _year = map['year'];
+    _debitedAmt = map['debited_amt'];
+    _creditedAmt = map['credited_amt'];
   }
 }

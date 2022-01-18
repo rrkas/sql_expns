@@ -1,14 +1,13 @@
-import 'package:signup/customs/expense_chart.dart';
-import 'package:signup/ex_pages/home_page.dart';
-import 'package:signup/expensetracker/etracker.dart';
+import 'package:flutter/material.dart';
+// import 'package:signup/ex_pages/home_page.dart';
+// import 'package:signup/expensetracker/etracker.dart';
 import 'package:signup/refresh.dart';
 import 'package:signup/widgets/list.dart';
 
 import '../../Screens/option_page.dart';
-import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen();
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
           const Padding(
               padding: EdgeInsets.only(top: 10),
               child: Text(
-                'ADD NEW EXPENSES or REFRESH TO TRACK',
+                'ADD EXPENSES or REFRESH TO TRACK',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   decoration: TextDecoration.none,
@@ -47,31 +46,37 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(width: 10),
-              RaisedButton.icon(
+              ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyAppp()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MyAppp()));
                 },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                color: Colors.deepPurple,
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                ),
                 icon: const Icon(Icons.add, color: Colors.white),
                 label: const Text('ADD', style: TextStyle(color: Colors.white)),
               ),
-              RaisedButton.icon(
+              ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => ListPage()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ListPage()));
                   //Navigator.of(context).push(MaterialPageRoute(builder: (_) => PieChartPage()));
                 },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                color: Colors.deepPurple,
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                ),
                 icon: const Icon(Icons.refresh, color: Colors.white),
                 label: const Text('REFRESH', style: TextStyle(color: Colors.white)),
               ),
-              RaisedButton.icon(
+              ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => Refresh()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const Refresh()));
                 },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                color: Colors.deepPurple,
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                  backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
+                ),
                 icon: const Icon(Icons.cloud_download, color: Colors.white),
                 label: const Text('CLOUD', style: TextStyle(color: Colors.white)),
               ),

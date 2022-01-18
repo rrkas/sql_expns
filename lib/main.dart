@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:signup/Screens/Welcome/welcome_screen.dart';
 import 'package:signup/constants.dart';
 
 import 'newScreens/login_screen.dart';
@@ -8,11 +7,11 @@ import 'newScreens/login_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  //const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         //scaffoldBackgroundColor: Colors.white,
       ),
-      home: NewLoginScreen(),
+      home: const NewLoginScreen(),
     );
   }
 }

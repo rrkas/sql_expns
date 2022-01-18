@@ -1,4 +1,4 @@
-Map<int,String> monthMap = {
+Map<int, String> monthMap = {
   1: 'January',
   2: 'February',
   3: 'March',
@@ -10,25 +10,18 @@ Map<int,String> monthMap = {
   9: 'September',
   10: 'October',
   11: 'November',
-  12: 'December'
+  12: 'December',
 };
 
-Map bnkAddressMap = {
-  'BOI': 'BOIIND',
-  'CANARA': 'CANBNK',
-  'KVB': 'KVBANK',
-  'HDFC': 'HDFCBK',
-  'AXIS': 'AxisBk'
-};
-
-int previousMonth(int month){
+int previousMonth(int month) {
   int _previousMonth = month - 1;
-  if(_previousMonth == 0){
+  if (_previousMonth == 0) {
     return 12;
   }
   return _previousMonth;
 }
-int whichYear(int year, int prevMonth){
+
+int whichYear(int year, int prevMonth) {
   if (prevMonth - 1 == 0) {
     return year - 1;
   }

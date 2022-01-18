@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-
 import 'package:signup/providers/transactions.dart';
 
 class TransactionItem extends StatelessWidget {
-
   final Transaction transaction;
-  const TransactionItem(this.transaction);
-
+  const TransactionItem(this.transaction, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 70,
       child: ListTile(
         leading: Container(
           width: 40,
           height: 40,
-          decoration:BoxDecoration(
+          decoration: BoxDecoration(
             color: transaction.color.withOpacity(0.8),
             borderRadius: BorderRadius.circular(12),
-          ) ,
+          ),
           alignment: Alignment.center,
           child: Icon(
             transaction.iconData,
